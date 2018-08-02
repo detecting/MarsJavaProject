@@ -6,76 +6,105 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utilityPackage.CustomWait;
 import utilityPackage.ExcelDataConfig;
 
 import java.awt.*;
-import java.io.IOException;
 
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
     //BrowserFactory browserObj;
     //driver constructor for the page
     public LoginPage() {
-        PageFactory.initElements(BrowserFactory.driver, this);
+        PageFactory.initElements( BrowserFactory.driver, this );
     }
-
-    //Webdriver wait
-    WebDriverWait wait = new WebDriverWait(BrowserFactory.driver, 20);
+//    WebDriverWait wait = new WebDriverWait( BrowserFactory.driver, 20 );
 
     //Click on Sign In button
-    @FindBy(how = How.XPATH, using = "//*[@id='home']/div/div[1]/div[1]/div/a[2]")
+    @FindBy(how = How.XPATH, using = "//a[contains(text(),'Sign In')]")
     @CacheLookup
-    static WebElement SignIn;
+    static WebElement signIn;
 
     //Username definition
-    @FindBy(how = How.XPATH, using = "//*[@id='generalModal']/div/div[1]/form/div[1]/input")
+    @FindBy(how = How.XPATH, using = "/html/body/div[2]/div/div/div[1]/form/div[1]/input")
     @CacheLookup
-    static WebElement Email;
+    static WebElement email;
 
-    //Password definition
-    @FindBy(how = How.XPATH, using = "//*[@id='generalModal']/div/div[1]/form/div[2]/input")
+    //password definition
+    @FindBy(how = How.XPATH, using = "/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/form[1]/div[2]/input[1]")
     @CacheLookup
-    static WebElement Password;
+    static WebElement password;
 
     //Login button definition
-    @FindBy(how = How.XPATH, using = "//*[@id='generalModal']/div/div[1]/form/div[4]/div")
+    @FindBy(how = How.XPATH, using = "//div[@class='fluid ui teal button']")
     @CacheLookup
-    static WebElement LoginButton;
+    static WebElement loginButton;
+
+    //Operation of each element
+    //click signIn button
+    public void SignIn() {
+        signIn.click();
+    }
+
+    //Fill email
+    public void Email(String emailInfo) {
+        email.clear();
+        email.sendKeys( emailInfo );
+    }
+
+    //Fill passwd
+    public void Password(String passwdInfo) {
+        password.clear();
+        password.sendKeys( passwdInfo );
+    }
+
+    //CLick LoginButton
+    public void LoginButton() {
+        loginButton.click();
+    }
 
 
     //Method to perform login actions
-    public void loginSteps() throws HeadlessException {
+    public AboutPage LoginSteps() throws HeadlessException, InterruptedException {
 
-        ExcelDataConfig excel = new ExcelDataConfig("./TestData/TestData.xlsx");
+        //Get the data from TestData excel file
+        ExcelDataConfig excel = new ExcelDataConfig( "./TestData/TestData.xlsx" );
 
-        //Click on SignIn button
-//        CustomWait.wait("//*[@id='home']/div/div[1]/div[1]/div/a[2]", 30, 1);
-        //use the rel path is better than abs one
-        CustomWait.wait("//a[contains(text(),'Sign In')]", 30, 1);
-        SignIn.click();
+        //Wait for the signIn to show up
+        CustomWait.WaitForElements( "//a[contains(text(),'Sign In')]" );
+
+        //Click on signIn button
+        SignIn();
+
+        //Wait fot Login Form to show up
+        CustomWait.FluentWait( "//div[@class='content one column stackable center aligned page grid']" );
 
         //Send Value to the UserName textBox
-        //wait until the title is displayed
-        CustomWait.wait("//*[@id='generalModal']/div/div[1]/form/div[1]/input", 50, 2);
-        Email.sendKeys(excel.getData("Login", 1, 0));
-        System.out.println("Entered Username");
+        Email( excel.getData( "Login", 1, 0 ) );
 
+        //Show info to console
+        System.out.println( "Entered Username" );
 
         //Send value to the password textBox
-        CustomWait.wait("//*[@id='generalModal']/div/div[1]/form/div[2]/input", 50, 2);
-        Password.sendKeys(excel.getData("Login", 1, 1));
-        System.out.println("Entered Password");
+        Password( excel.getData( "Login", 1, 1 ) );
 
+        //Show info to console
+        System.out.println( "Entered password" );
 
         //Click on Login Button
-        CustomWait.wait("//*[@id='generalModal']/div/div[1]/form/div[4]/div", 50, 1);
-        LoginButton.click();
-        System.out.println("Clicked on Login button");
+        while (!loginButton.isEnabled() && loginButton.isDisplayed()) {
+            Thread.sleep( 200 );
+        }
+        LoginButton();
 
+        //Show info to console
+        System.out.println( "Clicked on Login button" );
+        System.out.println( "Return to Home Page" );
 
+        //Wait for url change and return to Home page
+        CustomWait.WaitForUrl( "/Home/About" );
+        return new AboutPage();
     }
 
 }

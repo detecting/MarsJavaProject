@@ -15,7 +15,7 @@ public class BrowserFactory {
     public static WebDriver driver;
 
 
-    //Webdriver wait
+    //Webdriver FluentWait
     WebDriverWait wait = new WebDriverWait(BrowserFactory.driver, 20);
 
     //@Parameters("browserName")

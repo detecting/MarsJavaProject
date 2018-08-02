@@ -8,9 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import helperPackage.BrowserFactory;
 
-public class ShareSkill {
+public class ShareSkillPage {
 
-	public ShareSkill()
+	public ShareSkillPage()
 	{
 		//browserObj = new BrowserFactory();
 		PageFactory.initElements(BrowserFactory.driver, this);
