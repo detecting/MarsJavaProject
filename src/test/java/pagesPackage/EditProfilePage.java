@@ -79,7 +79,7 @@ public class EditProfilePage extends BasePage {
     @CacheLookup
     private WebElement BtnSave;
 
-
+    //select languageLevel
     public void LanguageLevel(String languageLevel) {
         CustomWait.WaitForElements( "//select[@name='level']" );
         Select select = new Select( SelectLanguageLevel );
@@ -87,22 +87,26 @@ public class EditProfilePage extends BasePage {
 
     }
 
+    //Add language
     public void AddLanguage(String language) {
         CustomWait.WaitForElements( "//input[@placeholder='Add Language']" );
         InputAddLanguage.clear();
         InputAddLanguage.sendKeys( language.trim() );
     }
 
+    //Click Add New button
     public void LanguagesAddNew() {
         CustomWait.WaitForElements( "//form[@class='ui form']//div[3]//div[1]//div[2]//div[1]//table[1]//thead[1]//tr[1]//th[3]//div[1]" );
         BtnLanguagesAddNew.click();
     }
 
+    //Click Add button
     public void LanguagesAdd() {
         CustomWait.WaitForElements( "//form[@class='ui form']//div[3]//div[1]//div[2]//div[1]//table[1]//thead[1]//tr[1]//th[3]//div[1]" );
         BtnLanguagesAdd.click();
     }
 
+    //Select VailabilityType
     public void VailabilityType(String vailabilityType) throws InterruptedException {
         Actions actions = new Actions( BrowserFactory.driver );
         actions.moveToElement( LocationAvailabilityType ).build().perform();
@@ -116,6 +120,7 @@ public class EditProfilePage extends BasePage {
 
     }
 
+    //Select AvailableHours
     public void AvailableHours(String availableHours) throws InterruptedException {
         Actions actions = new Actions( BrowserFactory.driver );
         actions.moveToElement( LocationAvailableHours ).build().perform();
@@ -129,6 +134,7 @@ public class EditProfilePage extends BasePage {
 
     }
 
+    //Select ErnTarget
     public void ErnTarget(String ernTarget) throws InterruptedException {
         Actions actions = new Actions( BrowserFactory.driver );
         actions.moveToElement( LocationEarnTarget ).build().perform();
@@ -142,7 +148,8 @@ public class EditProfilePage extends BasePage {
 
     }
 
-    public boolean VerifyAvailability(String availabilityType, String availableHours, String earnTarget) {
+    //VerifyAvailability
+    private boolean VerifyAvailability(String availabilityType, String availableHours, String earnTarget) {
 
         CustomWait.WaitForElements( "/html[1]/body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[2]/div[1]" );
         if ((LocationAvailabilityType.getText().trim().equals( availabilityType.trim() )) &&
@@ -155,7 +162,8 @@ public class EditProfilePage extends BasePage {
         return false;
     }
 
-    public boolean VerifyLanguages(String language, String level) {
+    //VerifyLanguages
+    private boolean VerifyLanguages(String language, String level) {
         if (VerifyTable( TableLanguage, language, level )) {
             BaseClass.testLog.log( Status.PASS, "VerifyLanguages PASS!" );
             return true;
@@ -174,6 +182,7 @@ public class EditProfilePage extends BasePage {
         return false;
     }
 
+    //Press Save Button
     public EditProfilePage Save() {
         CustomWait.WaitForElements( "//button[contains(text(),'Save')]" );
         BtnSave.click();
