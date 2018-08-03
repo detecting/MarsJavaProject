@@ -58,10 +58,10 @@ public class BaseClass {
         testLog.log( Status.INFO, "Logged Started" );
 
         //Initiate PO for login page
-        LoginPage login_page = new LoginPage();
+        LoginPage loginPage = new LoginPage();
 
         //perform login steps and navigate to AboutPage
-        AboutPage aboutPage = login_page.LoginSteps();
+        AboutPage aboutPage = loginPage.LoginSteps();
         //Check if the MarsLogo shown up
 
         testLog.log( Status.INFO, "Logged successfully" );
@@ -82,9 +82,7 @@ public class BaseClass {
         } else if (result.getStatus() == ITestResult.SKIP) {
             testLog.log( Status.SKIP, "Test skipped" );
         }
-//        softAssert.assertAll();
-        //quit the instance of driver
-//        BrowserFactory.driver.quit();
+
     }
 
     @AfterTest
