@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -37,16 +39,24 @@ public class BasePage {
     }
 
     //Table data verify, now only for 2 cols table, will take care in future.
-    public  boolean VerifyTable(WebElement webElementTable, String valueOne, String valueTow) {
-        List<WebElement> rows = webElementTable.findElements( By.tagName( "tr" ) );
-        for (WebElement row : rows) {
-            List<WebElement> cols = row.findElements( By.tagName( "td" ) );
-            for (int i = 0; i < cols.size(); i++) {
-                if ((cols.get( i ).getText().trim().equals( valueOne.trim() )) && (cols.get( i + 1 ).getText().trim().equals( valueTow.trim() ))) {
-                    return true;
-                }
+    public boolean VerifyTable(WebElement webElementTable, String valueOne, String valueTow) {
+//        List<WebElement> rows = webElementTable.findElements( By.tagName( "tbody" ) );
+        List<WebElement> tbodys = webElementTable.findElements( By.tagName( "tbody" ) );
+        for (WebElement tbody : tbodys) {
+            List<WebElement> cols = tbody.findElement( By.tagName( "tr" ) ).findElements( By.tagName( "td" ) );
+            int i=0;
+            if ((cols.get( i ).getText().trim().equals( valueOne ))&&(cols.get( ++i ).getText().trim().equals( valueTow ))){
+                return true;
             }
         }
+//        for (WebElement row : rows) {
+//            List<WebElement> cols = row.findElements( By.tagName( "td" ) );
+//            for (int i = 0; i < cols.size(); i++) {
+//                if ((cols.get( i ).getText().trim().equals( valueOne.trim() )) && (cols.get( i + 1 ).getText().trim().equals( valueTow.trim() ))) {
+//                    return true;
+//                }
+//            }
+//        }
         return false;
     }
 }
