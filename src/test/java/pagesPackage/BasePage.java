@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class BasePage {
-    //constructor
+    //constructor--
     public BasePage() {
         //implicitlyWait
         BrowserFactory.driver.manage().timeouts().implicitlyWait( 50, TimeUnit.SECONDS );
