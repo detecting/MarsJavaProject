@@ -16,11 +16,16 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 import helperPackage.BrowserFactory;
+import org.testng.asserts.SoftAssert;
 import pagesPackage.BasePage;
 import pagesPackage.AboutPage;
 import pagesPackage.LoginPage;
+import utilityPackage.ExcelDataRead;
 
 public class BaseClass {
+
+    public static SoftAssert softAssert=new SoftAssert();
+    public ExcelDataRead excelDataRead=new ExcelDataRead();
 
     //    public static SoftAssert softAssert;
     ExtentReports reports;

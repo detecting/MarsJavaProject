@@ -79,35 +79,9 @@ public class EditProfilePage extends BasePage {
     @CacheLookup
     private WebElement BtnSave;
 
-    //select languageLevel
-    public void LanguageLevel(String languageLevel) {
-        CustomWait.WaitForElements( "//select[@name='level']" );
-        Select select = new Select( SelectLanguageLevel );
-        select.selectByVisibleText( languageLevel.trim() );
-
-    }
-
-    //Add language
-    public void AddLanguage(String language) {
-        CustomWait.WaitForElements( "//input[@placeholder='Add Language']" );
-        InputAddLanguage.clear();
-        InputAddLanguage.sendKeys( language.trim() );
-    }
-
-    //Click Add New button
-    public void LanguagesAddNew() {
-        CustomWait.WaitForElements( "//form[@class='ui form']//div[3]//div[1]//div[2]//div[1]//table[1]//thead[1]//tr[1]//th[3]//div[1]" );
-        BtnLanguagesAddNew.click();
-    }
-
-    //Click Add button
-    public void LanguagesAdd() {
-        CustomWait.WaitForElements( "//form[@class='ui form']//div[3]//div[1]//div[2]//div[1]//table[1]//thead[1]//tr[1]//th[3]//div[1]" );
-        BtnLanguagesAdd.click();
-    }
 
     //Select VailabilityType
-    public void VailabilityType(String vailabilityType) throws InterruptedException {
+    private void VailabilityType(String vailabilityType) throws InterruptedException {
         Actions actions = new Actions( BrowserFactory.driver );
         actions.moveToElement( LocationAvailabilityType ).build().perform();
         CustomWait.WaitForElements( "/html[1]/body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[2]/div[1]/div[2]" );
@@ -121,7 +95,7 @@ public class EditProfilePage extends BasePage {
     }
 
     //Select AvailableHours
-    public void AvailableHours(String availableHours) throws InterruptedException {
+    private void AvailableHours(String availableHours) throws InterruptedException {
         Actions actions = new Actions( BrowserFactory.driver );
         actions.moveToElement( LocationAvailableHours ).build().perform();
         CustomWait.WaitForElements( "/html[1]/body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[3]/div[1]/div[2]" );
@@ -134,8 +108,8 @@ public class EditProfilePage extends BasePage {
 
     }
 
-    //Select ErnTarget
-    public void ErnTarget(String ernTarget) throws InterruptedException {
+    //Select EarnTarget
+    private void EarnTarget(String ernTarget) throws InterruptedException {
         Actions actions = new Actions( BrowserFactory.driver );
         actions.moveToElement( LocationEarnTarget ).build().perform();
         CustomWait.WaitForElements( "/html[1]/body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[4]/div[1]/div[2]" );
@@ -146,6 +120,33 @@ public class EditProfilePage extends BasePage {
             }
         }
 
+    }
+
+    //select languageLevel
+    private void LanguageLevel(String languageLevel) {
+        CustomWait.WaitForElements( "//select[@name='level']" );
+        Select select = new Select( SelectLanguageLevel );
+        select.selectByVisibleText( languageLevel.trim() );
+
+    }
+
+    //Add language
+    private void AddLanguage(String language) {
+        CustomWait.WaitForElements( "//input[@placeholder='Add Language']" );
+        InputAddLanguage.clear();
+        InputAddLanguage.sendKeys( language.trim() );
+    }
+
+    //Click Add New button
+    private void LanguagesAddNew() {
+        CustomWait.WaitForElements( "//form[@class='ui form']//div[3]//div[1]//div[2]//div[1]//table[1]//thead[1]//tr[1]//th[3]//div[1]" );
+        BtnLanguagesAddNew.click();
+    }
+
+    //Click Add button
+    private void LanguagesAdd() {
+        CustomWait.WaitForElements( "//form[@class='ui form']//div[3]//div[1]//div[2]//div[1]//table[1]//thead[1]//tr[1]//th[3]//div[1]" );
+        BtnLanguagesAdd.click();
     }
 
     //VerifyAvailability
@@ -170,6 +171,24 @@ public class EditProfilePage extends BasePage {
         }
         BaseClass.testLog.log( Status.FAIL, "VerifyLanguages FAIL!" );
         return false;
+    }
+
+    //Edit Language
+    public void EditLanguages(String language, String languageLevel) {
+        //Click Add New Button
+        LanguagesAddNew();
+        //Fill language and level
+        AddLanguage( language );
+        LanguageLevel( languageLevel );
+        //Click Add button
+        LanguagesAdd();
+    }
+
+    //Edit Availability
+    public void EditAvailability(String vailabilityType, String availableHours, String ernTarget) throws InterruptedException {
+        VailabilityType( vailabilityType );
+        AvailableHours( availableHours );
+        EarnTarget( ernTarget );
     }
 
     //Now verity the Availability data and Languages data
