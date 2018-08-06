@@ -28,7 +28,7 @@ public class TestClass extends BaseClass {
         testLog.log( Status.INFO, "Finish EditProfile Testing !" );
         //Assert verification
         softAssert.assertEquals( editProfilePage.VerifyEditData( excelDataRead.vailabilityType, excelDataRead.availableHours, excelDataRead.earnTarget, excelDataRead.addLanguage, excelDataRead.languageLevel ), true, "Test Failed, EditProfile Data Verify Failed" );
-        //************Because the Save function is not work well, so put assertion before ir, assertion should after save in industry environment.
+        //************Because the Save function is not work well, so put assertion before it, assertion should after save in industry environment.
         //Click Save Button
         editProfilePage.Save();
         softAssert.assertAll();
